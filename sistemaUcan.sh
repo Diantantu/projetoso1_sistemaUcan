@@ -33,6 +33,8 @@ echo "==========================================================================
 echo "========================================================================================================================================="
 while [ $opcao != 10 ]
 do
+	echo "---------------------------------------------------------------------------------------------------------------------------------"
+	echo "---------------------------------------------------------------------------------------------------------------------------------"
 	echo "1- Ver utilizadores do Sistema Ucan"
 	echo "2- Ver grupos do Sistema Ucan"
 	echo "3- Apagar utilizador do Sistema Ucan"
@@ -48,35 +50,55 @@ do
 	read opcao
 	case $opcao in
 	1)
-		clear
-		echo "Estes sao os utilizadores do sistema ucan"
-		echo "" 
+		
+		echo "Estes sao os utilizadores:"
 		ls -1 /mnt/ucan/utilizadores/
 		echo " "
 	;;
 	2)
+		
+		echo "Grupos do sistema:"
+		getent group | grep 200
 	;;
 	3)
+		echo "Digite o nome do utilizador que deseja eliminar"
+		read utilizador
+		deluser --remove-home $utilizador
+		rm -R /mnt/ucan/utilizadores/$utilizador
 	;;
 	4)
+		echo "Digite o nome do grupo que deseja eliminar"
+		read grupo
+		delgroup $grupo
 	;;
 	5)
+		echo "Conteudos do diretorio prova_de_exame"
+		echo "---------------------------------------------------------------------------"
+		ls -lo /mnt/ucan/prova_de_exame
 	;;
 	6)
+		echo "Informacoes do sistema de arquivos..."
+		echo "---------------------------------------------------------------------------"
+		df -hT
 	;;
 	7)
+		echo "Instalando atualizacoes do sistema..."
+		apt update
 	;;
 	8)
+		echo "Removendo pacotes desnecessarios..."
+		apt autoremove
 	;;
 	9)
+		echo "Limpando o sistema ucan..."
+		rm -r /mnt/ucan/*
+		echo "O sistema foi limpo com sucesso."
 	;;
 	10)
-		clear
 		echo "Terminando o script... "
 		break
 	;;
 	*)
-		clear
 		echo "Nao conseguimos perceber. Por favor seleciona apenas os numeros listados abaixo"
 		echo "  "
 		echo "  "
